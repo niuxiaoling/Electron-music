@@ -25,6 +25,9 @@ ipcRenderer.on('selected-file',(event,musicpath)=>{
 // 导入音乐监听发送数组
 $('add-music').addEventListener('click',()=>{
   // if(!renderMusicList.length === 0){
+    // 发到主进程将数据
     ipcRenderer.send('add-tracks',renderMusicList);
+    window.close();
+    ipcRenderer.send('main-update');
   // }
 })

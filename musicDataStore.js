@@ -14,8 +14,9 @@ class DataStore extends Store{
   getTrack(){    // 获取track
     return this.get('tracks') || []
   }
-  deleteTrack(){
-    this.delete('tracks');
+  deleteTrack(deleteId){
+    this.tracks = this.tracks.filter(track => track.id !== deleteId);
+    return this.saveTracks();
   }
   addTracks(tracks){  //添加track 及去重
     const trackProps = tracks.map(track =>{

@@ -10,7 +10,8 @@ class CreateWindow extends BrowserWindow{
         width:800,
         height:600,
         webPreferences:{
-          nodeIntegration:true
+          nodeIntegration:true,
+          devTools:true
         }
       }
       const finalConfig = {...basicConfig,...config}
@@ -25,9 +26,13 @@ class CreateWindow extends BrowserWindow{
 
 app.on('ready',()=>{
   const mainWindow = new CreateWindow({},'./renderer/index.html');
-  // mainWindow.webContents.on('did-finish-load',()=>{
-  //   mainWindow.webContents.send('get-tracks',MyStore.getTrack());
-  // })
+  // 处理页面加载事件
+  mainWindow.webContents.on('did-finish-load',()=>{
+    mainWindow.webContents.send('get-tracks',MyStore.getTrack());
+  })
+  ipcMain.on('main-update',()=>{
+    mainWindow.webContents.on('page-title-updated')
+  })
   // 打开窗口
   ipcMain.on('add-music-window',()=>{
     const addWindow = new CreateWindow({
@@ -49,6 +54,11 @@ app.on('ready',()=>{
   // 接收发射回来的添加的音乐
   ipcMain.on('add-tracks',(event,tracks)=>{
     const updatedTrack = MyStore.addTracks(tracks).getTrack();   // 存储到本地config.json中
-    event.sender.send('get-tracks',updatedTrack); // 主进程向主窗口发送数据
+    event.sender.send('get-tracks',updatedTrack); // 主进程向渲染页面index.html发送数据
+  })
+  // 删除音乐
+  ipcMain.on('delete-track',(event,id)=>{
+    const updatedTrack = MyStore.deleteTrack(id).getTrack();
+    event.sender.send('get-tracks',updatedTrack); // 主进程向渲染页面index.html发送数据
   })
 })
