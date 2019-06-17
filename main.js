@@ -1,9 +1,9 @@
 
-const {app, BrowserWindow,ipcMain,dialog} = require('electron');
+const {app, BrowserWindow,ipcMain,dialog,BrowserView} = require('electron');
 const DataStore  = require('./musicDataStore')
-// const client = require('electron-connect').client;
 console.log('music store path:'+app.getPath('userData'))
 const MyStore = new DataStore({'name':'Music Data'});
+// 封装窗口方法
 class CreateWindow extends BrowserWindow{
     constructor(config,fileLocation){
       const basicConfig = {
@@ -23,9 +23,10 @@ class CreateWindow extends BrowserWindow{
       })
     }
 }
-
 app.on('ready',()=>{
   const mainWindow = new CreateWindow({},'./renderer/index.html');
+  let view = new BrowserView()
+  mainWindow.setBrowserView(view)
   // 处理页面加载事件
   mainWindow.webContents.on('did-finish-load',()=>{
     mainWindow.webContents.send('get-tracks',MyStore.getTrack());
@@ -33,6 +34,7 @@ app.on('ready',()=>{
   ipcMain.on('main-update',()=>{
     mainWindow.webContents.on('page-title-updated')
   })
+  
   // 打开窗口
   ipcMain.on('add-music-window',()=>{
     const addWindow = new CreateWindow({

@@ -11,6 +11,8 @@ npm install
 npm run hot
 ```
 
+### isune
+之前安装打包的时候一直报错，原因是我安装的bootstrap是4.3.1 需要单独安装jquery.js和popper.js
 
 ## License
 

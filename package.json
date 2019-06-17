@@ -15,11 +15,36 @@
     "productName": "Electron-music",
     "asar": true,
     "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "category": "public.app-category.productivity"
     },
     "win": {
-      "target": "nsis",
+      "target": [
+        "nsis",
+        "zip"
+      ],
       "icon": "build/icon.ico"
+    },
+    "dmg": {
+      "background": "build/appdmg.png",
+      "icon": "build/icon.icns",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 380,
+          "y": 280,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 110,
+          "y": 280,
+          "type": "file"
+        }
+      ]
     }
   },
   "repository": "https://github.com/electron/electron-quick-start",
@@ -35,12 +60,14 @@
   "devDependencies": {
     "electron": "^5.0.2",
     "electron-builder": "^20.43.0",
-    "electron-connect": "^0.6.3",
-    "gulp": "^4.0.2"
+    "electron-connect": "^0.6.3"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
     "electron-store": "^3.3.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "gulp": "^4.0.2",
+    "jquery": "^1.9.1",
+    "popper.js": "^1.14.7"
   }
 }
