@@ -1,0 +1,29 @@
+directories:
+  output: dist
+  buildResources: build
+appId: xiaoling.example.app
+productName: Electron-music
+asar: true
+mac:
+  target:
+    - dmg
+    - zip
+  category: public.app-category.productivity
+win:
+  target:
+    - nsis
+    - zip
+  icon: build/icon.ico
+dmg:
+  background: build/appdmg.png
+  icon: build/icon.icns
+  iconSize: 100
+  contents:
+    - x: 380
+      'y': 280
+      type: link
+      path: /Applications
+    - x: 110
+      'y': 280
+      type: file
+electronVersion: 5.0.2
