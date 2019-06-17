@@ -6,7 +6,21 @@
   "scripts": {
     "start": "electron --watch main.js --exec 'electron .'",
     "dev": "electron .",
-    "hot": ".\\node_modules\\.bin\\gulp watch:electron"
+    "hot": ".\\node_modules\\.bin\\gulp watch:electron",
+    "dist": "build",
+    "mas": "electron-builder --mac mas"
+  },
+  "build": {
+    "appId": "xiaoling.example.app",
+    "productName": "Electron-music",
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    }
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -20,6 +34,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^5.0.2",
+    "electron-builder": "^20.43.0",
     "electron-connect": "^0.6.3",
     "gulp": "^4.0.2"
   },
